@@ -1,0 +1,176 @@
+//Box sizing mixin
+@mixin border-box {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+//
+// Update to suit your project
+//
+//Grid variables
+$grid-columns: 12; //Desktop columns
+$grid-columns-breakpoint: 8; //Responsive columns
+$grid-max-width: 1280px; //Site max width
+$gutter: 20px; // Gutter widths
+$breakpoint: 768px; // Responsive breakpoint
+//
+// Update to suit your project
+//
+
+
+
+$gutter-half: $gutter / 2; //DO NOT CHANGE
+
+//Grid wrapper and row prep
+*,
+*:after,
+*:before {
+    margin: 0;
+    padding: 0;
+    @include border-box;
+}
+
+.pf-grid-row,
+.pf-grid-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    max-width: $grid-max-width;
+}
+
+.pf-grid-row,
+.pf-grid-wrapper {
+    *zoom: 1;
+}
+
+.pf-grid-row:after,
+.pf-grid-row:before,
+.pf-grid-wrapper:after,
+.pf-grid-wrapper:before {
+    content: " ";
+    display: table;
+}
+
+.pf-grid-row:after,
+.pf-grid-wrapper:after {
+    clear: both;
+}
+//Desktop columns
+.pf-col-collapse {
+    margin-left: -20px;
+    margin-right: -20px;
+    width: calc(100% + 40px);
+}
+.pf-col-#{$grid-columns} {
+    width: calc(100% - #{$gutter});
+    display: block;
+    float: left;
+    margin-left: $gutter-half;
+    margin-right: $gutter-half;
+}
+@for $i from 1 through $grid-columns - 1 {
+    $col: 100% / $grid-columns * $i;
+    .pf-col-#{$i} {
+        width: calc(#{$col} - #{$gutter});
+        display: block;
+        float: left;
+        margin-left: $gutter-half;
+        margin-right: $gutter-half;
+    }
+}
+//Responsive columns : max is $grid-columns-breakpoint
+@media (max-width: #{$breakpoint}) {
+    .pf-col-#{$grid-columns-breakpoint}-breakpoint {
+        width: calc(100% - #{$gutter});
+        display: block;
+        float: left;
+        margin-left: $gutter-half;
+        margin-right: $gutter-half;
+    }
+}
+@for $i from 1 through 8 - 1 {
+    $col-breakpoint: 100% / $grid-columns-breakpoint * $i;
+    @media (max-width: #{$breakpoint}) {
+        .pf-col-#{$i}-breakpoint {
+            width: calc(#{$col-breakpoint} - #{$gutter});
+            display: block;
+            float: left;
+            margin-left: $gutter-half;
+            margin-right: $gutter-half;
+        }
+    }
+}
+//Push from left : max is half grid column total
+@for $i from 1 through ($grid-columns / 2) {
+    $col: 100% / $grid-columns * $i;
+    .pf-col-#{$i}-push {
+        width: calc(#{$col} - #{$gutter});
+        display: block;
+        float: left;
+        margin-left: calc(#{$col} + #{$gutter-half});
+        margin-right: $gutter-half;
+    }
+}
+//Responive push : max is half $grid-columns-breakpoint column total
+@for $i from 1 through ($grid-columns-breakpoint / 2) {
+     @media (max-width: #{$breakpoint}){
+        $col-breakpoint: 100% / $grid-columns-breakpoint * $i;
+        .pf-col-#{$i}-push-breakpoint {
+            width: calc(#{$col-breakpoint} - #{$gutter});
+            display: block;
+            float: left;
+            margin-left: calc(#{$col-breakpoint} + #{$gutter-half});
+            margin-right: $gutter-half;
+        }
+    }
+}
+//Pull from left : max is half grid column total
+@for $i from 1 through ($grid-columns / 2) {
+    $col: 100% / $grid-columns * $i;
+    .pf-col-#{$i}-pull {
+        width: calc(#{$col} - #{$gutter});
+        display: block;
+        float: right;
+        margin-right: calc(#{$col} + #{$gutter-half});
+        margin-left: $gutter-half;
+    }
+}
+//Responive pull : max is half $grid-columns-breakpoint total
+@for $i from 1 through ($grid-columns-breakpoint / 2) {
+     @media (max-width: #{$breakpoint}){
+        $col-breakpoint: 100% / $grid-columns-breakpoint * $i;
+        .pf-col-#{$i}-pull-breakpoint {
+            width: calc(#{$col-breakpoint} - #{$gutter});
+            display: block;
+            float: right;
+            margin-left: calc(#{$col-breakpoint} + #{$gutter-half});
+            margin-right: $gutter-half;
+        }
+    }
+}
+//Shift and center : max is grid column total minus one
+@for $i from 1 through ($grid-columns - 1) {
+    $col: 100% / $grid-columns * $i;
+
+    .pf-col-#{$i}-shift {
+        width: calc(#{$col} - #{$gutter});
+        display: block;
+        margin: 0 auto;
+        position: relative;
+        left: -$gutter-half;
+    }
+}
+//Responive shift : max is $grid-columns-breakpoint total minus one
+@for $i from 1 through ($grid-columns-breakpoint - 1) {
+     @media (max-width: #{$breakpoint}){
+        $col-breakpoint: 100% / $grid-columns-breakpoint * $i;
+        .pf-col-#{$i}-shift-breakpoint {
+            width: calc(#{$col-breakpoint} - #{$gutter});
+            display: block;
+            margin: 0 auto;
+            position: relative;
+            left: -$gutter-half;
+        }
+    }
+}
